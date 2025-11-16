@@ -1,130 +1,319 @@
 {% extends "base.html" %}
 
-{% block title %}Inicio - Sistema Veterinario{% endblock %}
+{% block title %}Inicio - Sistema Veterinario Profesional{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(99, 102, 241, 0.95) 100%),
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%234F46E5" width="1200" height="600"/><path fill="%235B21B6" opacity="0.1" d="M0 300 Q300 150 600 300 T1200 300 L1200 600 L0 600 Z"/></svg>');
+        background-size: cover;
+        background-position: center;
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+    }
+
+    .hero-buttons .btn {
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        margin: 0 10px;
+        transition: all 0.3s ease;
+    }
+
+    .hero-buttons .btn-primary {
+        background: white;
+        color: #4F46E5;
+        border: none;
+    }
+
+    .hero-buttons .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+    }
+
+    .hero-buttons .btn-outline-light:hover {
+        transform: translateY(-3px);
+        background: rgba(255,255,255,0.2);
+    }
+
+    /* Floating Elements */
+    .floating-icon {
+        position: absolute;
+        font-size: 3rem;
+        opacity: 0.1;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .icon-1 { top: 10%; left: 10%; animation-delay: 0s; }
+    .icon-2 { top: 20%; right: 15%; animation-delay: 1s; }
+    .icon-3 { bottom: 20%; left: 15%; animation-delay: 2s; }
+    .icon-4 { bottom: 10%; right: 10%; animation-delay: 3s; }
+
+    /* Services Section */
+    .services-section {
+        padding: 100px 0;
+        background: #F9FAFB;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #111827;
+    }
+
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #6B7280;
+        margin-bottom: 4rem;
+    }
+
+    .service-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        transition: all 0.4s ease;
+        border: 2px solid transparent;
+        height: 100%;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border-color: #4F46E5;
+    }
+
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 25px;
+        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: white;
+        transition: all 0.4s ease;
+    }
+
+    .service-card:hover .service-icon {
+        transform: rotate(10deg) scale(1.1);
+    }
+
+    .service-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #111827;
+    }
+
+    .service-description {
+        color: #6B7280;
+        line-height: 1.8;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 100px 0;
+        background: white;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 40px;
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: #EEF2FF;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 25px;
+        flex-shrink: 0;
+        color: #4F46E5;
+        font-size: 1.8rem;
+    }
+
+    .feature-content h4 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #111827;
+    }
+
+    .feature-content p {
+        color: #6B7280;
+        margin: 0;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        color: white;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+        color: white;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 25px;
+    }
+
+    .cta-description {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-button {
+        padding: 18px 50px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        border-radius: 50px;
+        background: white;
+        color: #1E293B;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(255,255,255,0.3);
+        color: #4F46E5;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-on-scroll {
+        animation: fadeInUp 0.8s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .hero-buttons .btn {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <!-- Hero Section -->
-    <div class="row align-items-center py-5 bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; margin: 20px;">
-        <div class="col-md-6 text-center text-md-start px-5">
-            <h1 class="display-4 fw-bold mb-3">Sistema Veterinario</h1>
-            <p class="lead mb-4">Gestión integral para tu clínica veterinaria. Control de citas, mascotas, inventario y más.</p>
-            <div class="d-flex gap-3 justify-content-center justify-content-md-start">
-                <a href="{{ url_for('auth.login') }}" class="btn btn-light btn-lg px-4">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
-                </a>
-                <a href="{{ url_for('auth.register') }}" class="btn btn-outline-light btn-lg px-4">
-                    <i class="bi bi-person-plus me-2"></i>Registrarse
-                </a>
-            </div>
-        </div>
-        <div class="col-md-6 text-center">
-            <i class="bi bi-heart-pulse" style="font-size: 200px; opacity: 0.3;"></i>
-        </div>
-    </div>
+<!-- Hero Section -->
+<div class="hero-section">
+    <i class="bi bi-heart-pulse floating-icon icon-1"></i>
+    <i class="bi bi-hospital floating-icon icon-2"></i>
+    <i class="bi bi-award floating-icon icon-3"></i>
+    <i class="bi bi-shield-check floating-icon icon-4"></i>
 
-    <!-- Features Section -->
-    <div class="row mt-5 g-4">
-        <div class="col-12">
-            <h2 class="text-center mb-5">¿Por qué elegirnos?</h2>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex p-4 mb-3">
-                        <i class="bi bi-calendar-check text-primary" style="font-size: 3rem;"></i>
-                    </div>
-                    <h5 class="card-title">Gestión de Citas</h5>
-                    <p class="card-text text-muted">
-                        Agenda y administra citas médicas de forma eficiente. Sistema de recordatorios automáticos.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex p-4 mb-3">
-                        <i class="bi bi-clipboard2-pulse text-success" style="font-size: 3rem;"></i>
-                    </div>
-                    <h5 class="card-title">Historial Clínico</h5>
-                    <p class="card-text text-muted">
-                        Registro completo del historial médico de cada mascota. Acceso rápido a información vital.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-info bg-opacity-10 d-inline-flex p-4 mb-3">
-                        <i class="bi bi-box-seam text-info" style="font-size: 3rem;"></i>
-                    </div>
-                    <h5 class="card-title">Inventario</h5>
-                    <p class="card-text text-muted">
-                        Control de medicamentos y suministros. Alertas de stock bajo y fechas de vencimiento.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex p-4 mb-3">
-                        <i class="bi bi-people text-warning" style="font-size: 3rem;"></i>
-                    </div>
-                    <h5 class="card-title">Gestión de Usuarios</h5>
-                    <p class="card-text text-muted">
-                        Roles diferenciados: Admin, Veterinarios y Tutores. Permisos personalizados.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-danger bg-opacity-10 d-inline-flex p-4 mb-3">
-                        <i class="bi bi-graph-up text-danger" style="font-size: 3rem;"></i>
-                    </div>
-                    <h5 class="card-title">Reportes</h5>
-                    <p class="card-text text-muted">
-                        Estadísticas y reportes detallados. Información valiosa para la toma de decisiones.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 text-center">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-dark bg-opacity-10 d-inline-flex p-4 mb-3">
-                        <i class="bi bi-shield-check text-dark" style="font-size: 3rem;"></i>
-                    </div>
-                    <h5 class="card-title">Seguridad</h5>
-                    <p class="card-text text-muted">
-                        Datos protegidos con encriptación. Control de acceso y auditoría de acciones.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="row mt-5 mb-5">
-        <div class="col-12">
-            <div class="card bg-light border-0 shadow-sm">
-                <div class="card-body text-center p-5">
-                    <h3 class="mb-3">¿Listo para comenzar?</h3>
-                    <p class="lead text-muted mb-4">
-                        Únete a nosotros y transforma la gestión de tu clínica veterinaria
-                    </p>
-                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-5">
-                        <i class="bi bi-rocket-takeoff me-2"></i>Comenzar Ahora
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="hero-title">
+                    Cuidado Veterinario<br>
+                    de Excelencia
+                </h1>
+                <p class="hero-subtitle">
+                    Sistema integral para la gestión profesional de tu clínica veterinaria.
+                    Tecnología al servicio de la salud animal.
+                </p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                    </a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-outline-light">
+                        <i class="bi bi-person-plus me-2"></i>Registrarse
                     </a>
                 </div>
             </div>
@@ -132,25 +321,196 @@
     </div>
 </div>
 
-<style>
-.bg-gradient {
-    animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-}
+<!-- Services Section -->
+<div class="services-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <p class="section-subtitle">Soluciones completas para tu clínica veterinaria</p>
+        </div>
 
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="bi bi-calendar-heart"></i>
+                    </div>
+                    <h3 class="service-title">Gestión de Citas</h3>
+                    <p class="service-description">
+                        Sistema completo de agendamiento con recordatorios automáticos,
+                        notificaciones y seguimiento de citas médicas.
+                    </p>
+                </div>
+            </div>
 
-.card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="bi bi-clipboard2-pulse"></i>
+                    </div>
+                    <h3 class="service-title">Historia Clínica Digital</h3>
+                    <p class="service-description">
+                        Registro completo del historial médico de cada mascota con acceso
+                        inmediato a información vital.
+                    </p>
+                </div>
+            </div>
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
-}
-</style>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <h3 class="service-title">Control de Inventario</h3>
+                    <p class="service-description">
+                        Gestión eficiente de medicamentos y suministros con alertas de
+                        stock y fechas de vencimiento.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <h3 class="service-title">Reportes y Estadísticas</h3>
+                    <p class="service-description">
+                        Análisis detallado del rendimiento de tu clínica con gráficos
+                        y reportes personalizables.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h3 class="service-title">Seguridad Avanzada</h3>
+                    <p class="service-description">
+                        Protección de datos con encriptación, control de acceso por roles
+                        y auditoría completa.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h3 class="service-title">Gestión Multiusuario</h3>
+                    <p class="service-description">
+                        Roles diferenciados para administradores, veterinarios y tutores
+                        con permisos personalizados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-title mb-4">¿Por qué elegir nuestro sistema?</h2>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Rápido y Eficiente</h4>
+                        <p>Optimiza el tiempo de tu clínica con procesos automatizados y acceso instantáneo a información.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-phone"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>100% Responsive</h4>
+                        <p>Accede desde cualquier dispositivo: computadora, tablet o smartphone.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-cloud-check"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Respaldo Automático</h4>
+                        <p>Tus datos siempre seguros con backups automáticos y recuperación ante desastres.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Soporte 24/7</h4>
+                        <p>Equipo de soporte disponible para ayudarte cuando lo necesites.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <i class="bi bi-laptop" style="font-size: 20rem; color: #E0E7FF;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Clínicas Activas</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Mascotas Atendidas</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number">1K+</div>
+                    <div class="stat-label">Veterinarios</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">¿Listo para transformar tu clínica?</h2>
+        <p class="cta-description">
+            Únete a cientos de profesionales que ya confían en nuestro sistema para
+            brindar el mejor cuidado a sus pacientes.
+        </p>
+        <a href="{{ url_for('auth.register') }}" class="btn cta-button">
+            <i class="bi bi-rocket-takeoff me-2"></i>Comenzar Ahora Gratis
+        </a>
+    </div>
+</div>
 {% endblock %}
