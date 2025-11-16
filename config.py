@@ -91,10 +91,57 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     WTF_CSRF_ENABLED = False
 
+class SQLServerConfig(Config):
+    """
+    Configuración para SQL Server
+
+    Variables de entorno necesarias:
+    - SQLSERVER_DRIVER: Driver ODBC (default: ODBC Driver 17 for SQL Server)
+    - SQLSERVER_SERVER: Servidor (ejemplo: localhost o IP)
+    - SQLSERVER_DATABASE: Nombre de la base de datos
+    - SQLSERVER_USERNAME: Usuario de SQL Server
+    - SQLSERVER_PASSWORD: Contraseña
+    - SQLSERVER_PORT: Puerto (default: 1433)
+    - SQLSERVER_TRUSTED: true para autenticación Windows (opcional)
+
+    Ejemplo de DATABASE_URL:
+    mssql+pyodbc://user:pass@localhost:1433/veterinaria?driver=ODBC+Driver+17+for+SQL+Server
+    """
+
+    @staticmethod
+    def get_sqlserver_uri():
+        """Construye la URI de SQL Server desde variables de entorno"""
+        driver = os.environ.get('SQLSERVER_DRIVER', 'ODBC Driver 17 for SQL Server')
+        server = os.environ.get('SQLSERVER_SERVER', 'localhost')
+        database = os.environ.get('SQLSERVER_DATABASE', 'veterinaria')
+        username = os.environ.get('SQLSERVER_USERNAME')
+        password = os.environ.get('SQLSERVER_PASSWORD')
+        port = os.environ.get('SQLSERVER_PORT', '1433')
+        trusted = os.environ.get('SQLSERVER_TRUSTED', 'false').lower() == 'true'
+
+        # Si usa autenticación de Windows
+        if trusted:
+            return f"mssql+pyodbc://{server}:{port}/{database}?driver={driver}&trusted_connection=yes"
+
+        # Autenticación con usuario y contraseña
+        if username and password:
+            return f"mssql+pyodbc://{username}:{password}@{server}:{port}/{database}?driver={driver}"
+
+        # Fallback a SQLite si no hay configuración de SQL Server
+        return 'sqlite:///veterinaria.db'
+
+    SQLALCHEMY_DATABASE_URI = get_sqlserver_uri.__func__()
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_pre_ping': True,
+        'pool_recycle': 3600,
+        'echo_pool': True
+    }
+
 # Diccionario de configuraciones
 config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
     'testing': TestingConfig,
+    'sqlserver': SQLServerConfig,
     'default': DevelopmentConfig
 }

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Sistema Veterinario{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Hero Section -->
+    <div class="row align-items-center py-5 bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; margin: 20px;">
+        <div class="col-md-6 text-center text-md-start px-5">
+            <h1 class="display-4 fw-bold mb-3">Sistema Veterinario</h1>
+            <p class="lead mb-4">Gestión integral para tu clínica veterinaria. Control de citas, mascotas, inventario y más.</p>
+            <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-light btn-lg px-4">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                </a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-outline-light btn-lg px-4">
+                    <i class="bi bi-person-plus me-2"></i>Registrarse
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <i class="bi bi-heart-pulse" style="font-size: 200px; opacity: 0.3;"></i>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mt-5 g-4">
+        <div class="col-12">
+            <h2 class="text-center mb-5">¿Por qué elegirnos?</h2>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex p-4 mb-3">
+                        <i class="bi bi-calendar-check text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Gestión de Citas</h5>
+                    <p class="card-text text-muted">
+                        Agenda y administra citas médicas de forma eficiente. Sistema de recordatorios automáticos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex p-4 mb-3">
+                        <i class="bi bi-clipboard2-pulse text-success" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Historial Clínico</h5>
+                    <p class="card-text text-muted">
+                        Registro completo del historial médico de cada mascota. Acceso rápido a información vital.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="rounded-circle bg-info bg-opacity-10 d-inline-flex p-4 mb-3">
+                        <i class="bi bi-box-seam text-info" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Inventario</h5>
+                    <p class="card-text text-muted">
+                        Control de medicamentos y suministros. Alertas de stock bajo y fechas de vencimiento.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex p-4 mb-3">
+                        <i class="bi bi-people text-warning" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Gestión de Usuarios</h5>
+                    <p class="card-text text-muted">
+                        Roles diferenciados: Admin, Veterinarios y Tutores. Permisos personalizados.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="rounded-circle bg-danger bg-opacity-10 d-inline-flex p-4 mb-3">
+                        <i class="bi bi-graph-up text-danger" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Reportes</h5>
+                    <p class="card-text text-muted">
+                        Estadísticas y reportes detallados. Información valiosa para la toma de decisiones.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="rounded-circle bg-dark bg-opacity-10 d-inline-flex p-4 mb-3">
+                        <i class="bi bi-shield-check text-dark" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Seguridad</h5>
+                    <p class="card-text text-muted">
+                        Datos protegidos con encriptación. Control de acceso y auditoría de acciones.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="row mt-5 mb-5">
+        <div class="col-12">
+            <div class="card bg-light border-0 shadow-sm">
+                <div class="card-body text-center p-5">
+                    <h3 class="mb-3">¿Listo para comenzar?</h3>
+                    <p class="lead text-muted mb-4">
+                        Únete a nosotros y transforma la gestión de tu clínica veterinaria
+                    </p>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Comenzar Ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-gradient {
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+</style>
+{% endblock %}
