@@ -190,19 +190,58 @@ class ConfiguracionSistema(db.Model):
 class AuditoriaAccion(db.Model):
     """Registro de auditoría de acciones en el sistema"""
     __tablename__ = 'auditoria_acciones'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
-    
+
     accion = db.Column(db.String(100))  # login, logout, crear_cita, editar_mascota, etc.
     entidad = db.Column(db.String(50))  # usuario, mascota, cita, etc.
     entidad_id = db.Column(db.Integer)
-    
+
     descripcion = db.Column(db.Text)
     datos_anteriores = db.Column(db.JSON)
     datos_nuevos = db.Column(db.JSON)
-    
+
     ip_address = db.Column(db.String(45))
     user_agent = db.Column(db.String(200))
-    
+
     fecha = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Receta(db.Model):
+    """
+    Modelo de Receta Médica
+    Relaciona medicamentos con citas
+    """
+    __tablename__ = 'recetas'
+
+    # Campos principales
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Relaciones
+    cita_id = db.Column(db.Integer, db.ForeignKey('citas.id'), nullable=False)
+    medicamento_id = db.Column(db.Integer, db.ForeignKey('medicamentos.id'), nullable=False)
+
+    # Información de la receta
+    cantidad = db.Column(db.Integer, nullable=False)
+    dosis = db.Column(db.String(200))  # Ej: "1 tableta cada 8 horas"
+    duracion = db.Column(db.String(100))  # Ej: "7 días"
+    indicaciones = db.Column(db.Text)
+
+    # Timestamps
+    fecha_receta = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __init__(self, cita_id, medicamento_id, cantidad, **kwargs):
+        """
+        Constructor del modelo Receta
+        """
+        self.cita_id = cita_id
+        self.medicamento_id = medicamento_id
+        self.cantidad = cantidad
+
+        # Campos opcionales
+        self.dosis = kwargs.get('dosis')
+        self.duracion = kwargs.get('duracion')
+        self.indicaciones = kwargs.get('indicaciones')
+
+    def __repr__(self):
+        return f'<Receta {self.id} - Cita: {self.cita_id} - Medicamento: {self.medicamento_id}>'
