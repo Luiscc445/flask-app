@@ -60,9 +60,11 @@ class Usuario(UserMixin, db.Model):
     notificaciones = db.relationship('Notificacion', backref='usuario', lazy='dynamic', cascade='all, delete-orphan')
     
     def __init__(self, **kwargs):
+        # Extraer password antes de llamar a super
+        password = kwargs.pop('password', None)
         super(Usuario, self).__init__(**kwargs)
-        if 'password' in kwargs:
-            self.set_password(kwargs['password'])
+        if password:
+            self.set_password(password)
     
     def set_password(self, password):
         """Hashea la contraseña antes de guardarla"""
