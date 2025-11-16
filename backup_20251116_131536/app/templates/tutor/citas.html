@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>📅 Mis Citas</h1>
+<a href="{{ url_for('tutor.nueva_cita') }}" class="btn btn-success">+ Nueva</a>
+<table class="table" style="margin-top:2rem;">
+<thead><tr><th>Fecha</th><th>Mascota</th><th>Estado</th></tr></thead>
+<tbody>
+{% for c in citas %}
+<tr><td>{{ c.fecha_hora.strftime('%d/%m/%Y') }}</td><td>{{ c.mascota.nombre }}</td><td><span class="badge badge-info">{{ c.estado }}</span></td></tr>
+{% endfor %}
+</tbody></table>
+{% endblock %}

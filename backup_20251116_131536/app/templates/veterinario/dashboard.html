@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>👨‍⚕️ Dashboard</h1>
+<div class="row">
+<div class="col-md-4"><div class="stat-card"><div class="stat-number">{{ citas_pendientes }}</div><div class="stat-label">Pendientes</div></div></div>
+</div>
+<a href="{{ url_for('veterinario.citas_pendientes') }}" class="btn btn-warning">Ver Pendientes</a>
+{% endblock %}

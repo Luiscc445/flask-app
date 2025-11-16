@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Administrador{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">📊 Dashboard del Administrador</h1>
+<div class="row">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_tutores }}</div>
+            <div class="stat-label">Tutores Registrados</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_veterinarios }}</div>
+            <div class="stat-label">Veterinarios</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_mascotas }}</div>
+            <div class="stat-label">Mascotas</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_medicamentos }}</div>
+            <div class="stat-label">Medicamentos</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">🚨 Alertas</div>
+            <div class="card-body">
+                <p><strong>Citas Pendientes:</strong> {{ citas_pendientes }}</p>
+                <p><strong>Medicamentos con Stock Bajo:</strong> {{ medicamentos_bajo_stock }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">👥 Últimos Tutores Registrados</div>
+            <div class="card-body">
+                {% for tutor in ultimos_tutores %}
+                <p>• {{ tutor.nombre_completo }} - {{ tutor.fecha_registro.strftime('%d/%m/%Y') }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

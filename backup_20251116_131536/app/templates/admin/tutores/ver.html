@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Ver Tutor{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">👤 Detalles del Tutor</h1>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Información Personal</div>
+            <div class="card-body">
+                <p><strong>Nombre:</strong> {{ tutor.nombre_completo }}</p>
+                <p><strong>Usuario:</strong> {{ tutor.username }}</p>
+                <p><strong>Email:</strong> {{ tutor.email }}</p>
+                <p><strong>Teléfono:</strong> {{ tutor.telefono or 'N/A' }}</p>
+                <p><strong>Dirección:</strong> {{ tutor.direccion or 'N/A' }}</p>
+                <p><strong>Estado:</strong> 
+                    {% if tutor.activo %}
+                    <span class="badge badge-success">Activo</span>
+                    {% else %}
+                    <span class="badge badge-danger">Inactivo</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Estadísticas</div>
+            <div class="card-body">
+                <p><strong>Total de Mascotas:</strong> {{ mascotas|length }}</p>
+                <p><strong>Total de Citas:</strong> {{ citas|length }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 1rem;">
+    <a href="{{ url_for('admin.editar_tutor', id=tutor.id) }}" class="btn btn-primary">Editar</a>
+    <a href="{{ url_for('admin.tutores') }}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}

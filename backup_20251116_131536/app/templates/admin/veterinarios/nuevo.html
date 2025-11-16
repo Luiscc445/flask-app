@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Veterinario{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">➕ Nuevo Veterinario</h1>
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" name="nombre" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Apellido *</label>
+                        <input type="text" class="form-control" name="apellido" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Nombre de Usuario *</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Contraseña *</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email *</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Teléfono</label>
+                <input type="text" class="form-control" name="telefono">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Especialidad</label>
+                        <input type="text" class="form-control" name="especialidad">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Licencia Profesional</label>
+                        <input type="text" class="form-control" name="licencia">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Crear Veterinario</button>
+            <a href="{{ url_for('admin.veterinarios') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

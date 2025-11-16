@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>⏳ Pendientes</h1>
+<table class="table">
+<thead><tr><th>Fecha</th><th>Mascota</th><th>Acciones</th></tr></thead>
+<tbody>
+{% for c in citas %}
+<tr><td>{{ c.fecha_hora.strftime('%d/%m/%Y') }}</td><td>{{ c.mascota.nombre }}</td>
+<td><form method="POST" action="{{ url_for('veterinario.aceptar_cita', id=c.id) }}" style="display:inline;">
+<button type="submit" class="btn btn-sm btn-success">Aceptar</button></form></td></tr>
+{% endfor %}
+</tbody></table>
+{% endblock %}

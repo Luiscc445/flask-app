@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ mascota.nombre }}</h1>
+<div class="card"><div class="card-body">
+<p><strong>Especie:</strong> {{ mascota.especie }}</p>
+<p><strong>Raza:</strong> {{ mascota.raza or 'N/A' }}</p>
+</div></div>
+<a href="{{ url_for('tutor.editar_mascota', id=mascota.id) }}" class="btn btn-primary">Editar</a>
+{% endblock %}

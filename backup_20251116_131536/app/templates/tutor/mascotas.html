@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Mis Mascotas{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>🐾 Mis Mascotas</h1>
+        <p class="text-muted mb-0">Gestiona la información de tus compañeros</p>
+    </div>
+    <a href="{{ url_for('tutor.nueva_mascota') }}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Nueva Mascota
+    </a>
+</div>
+
+{% if mascotas %}
+<div class="row g-4">
+    {% for mascota in mascotas %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    {% if mascota.especie == 'Perro' %}🐕
+                    {% elif mascota.especie == 'Gato' %}🐈
+                    {% elif mascota.especie == 'Ave' %}🦜
+                    {% elif mascota.especie == 'Conejo' %}🐰
+                    {% elif mascota.especie == 'Hamster' %}🐹
+                    {% elif mascota.especie == 'Reptil' %}🦎
+                    {% else %}🐾
+                    {% endif %}
+                    {{ mascota.nombre }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong>Especie:</strong> {{ mascota.especie }}
+                </div>
+                {% if mascota.raza %}
+                <div class="mb-2">
+                    <strong>Raza:</strong> {{ mascota.raza }}
+                </div>
+                {% endif %}
+                {% if mascota.sexo %}
+                <div class="mb-2">
+                    <strong>Sexo:</strong> {{ mascota.sexo }}
+                </div>
+                {% endif %}
+                {% if mascota.edad %}
+                <div class="mb-2">
+                    <strong>Edad:</strong> {{ mascota.edad }} año(s)
+                </div>
+                {% endif %}
+                {% if mascota.peso %}
+                <div class="mb-2">
+                    <strong>Peso:</strong> {{ mascota.peso }} kg
+                </div>
+                {% endif %}
+                {% if mascota.esterilizado %}
+                <div class="mb-2">
+                    <span class="badge bg-info">Esterilizado</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-transparent">
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('tutor.ver_mascota', id=mascota.id) }}" 
+                       class="btn btn-sm btn-primary flex-fill">
+                        <i class="bi bi-eye"></i> Ver Detalles
+                    </a>
+                    <a href="{{ url_for('tutor.editar_mascota', id=mascota.id) }}" 
+                       class="btn btn-sm btn-secondary">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body text-center py-5">
+        <i class="bi bi-emoji-frown display-1 text-muted"></i>
+        <h3 class="mt-3">No tienes mascotas registradas</h3>
+        <p class="text-muted">Registra a tu primera mascota para empezar a gestionar sus citas médicas</p>
+        <a href="{{ url_for('tutor.nueva_mascota') }}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Registrar Primera Mascota
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

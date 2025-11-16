@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Editar Medicamento{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">✏️ Editar Medicamento</h1>
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-group">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" value="{{ medicamento.nombre }}" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control" name="descripcion" rows="3">{{ medicamento.descripcion or '' }}</textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" name="stock" value="{{ medicamento.stock }}" min="0">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Stock Mínimo</label>
+                        <input type="number" class="form-control" name="stock_minimo" value="{{ medicamento.stock_minimo }}" min="0">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Unidad</label>
+                        <input type="text" class="form-control" name="unidad_medida" value="{{ medicamento.unidad_medida }}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="activo" name="activo" {% if medicamento.activo %}checked{% endif %}>
+                    <label for="activo">Medicamento Activo</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            <a href="{{ url_for('admin.ver_medicamento', id=medicamento.id) }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

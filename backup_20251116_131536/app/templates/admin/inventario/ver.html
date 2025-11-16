@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Ver Medicamento{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">💊 Detalles del Medicamento</h1>
+<div class="card">
+    <div class="card-header">{{ medicamento.nombre }}</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Principio Activo:</strong> {{ medicamento.principio_activo or 'N/A' }}</p>
+                <p><strong>Presentación:</strong> {{ medicamento.presentacion or 'N/A' }}</p>
+                <p><strong>Concentración:</strong> {{ medicamento.concentracion or 'N/A' }}</p>
+                <p><strong>Stock Actual:</strong> {{ medicamento.stock }} {{ medicamento.unidad_medida }}</p>
+                <p><strong>Stock Mínimo:</strong> {{ medicamento.stock_minimo }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Lote:</strong> {{ medicamento.lote or 'N/A' }}</p>
+                <p><strong>Vencimiento:</strong> {{ medicamento.fecha_vencimiento.strftime('%d/%m/%Y') if medicamento.fecha_vencimiento else 'N/A' }}</p>
+                <p><strong>Proveedor:</strong> {{ medicamento.proveedor or 'N/A' }}</p>
+                <p><strong>Precio:</strong> Bs. {{ medicamento.precio_unitario or 'N/A' }}</p>
+                <p><strong>Estado:</strong> 
+                    {% if medicamento.necesita_reposicion %}
+                    <span class="badge badge-danger">⚠️ Requiere Reposición</span>
+                    {% else %}
+                    <span class="badge badge-success">✓ Stock OK</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% if medicamento.descripcion %}
+        <p><strong>Descripción:</strong></p>
+        <p>{{ medicamento.descripcion }}</p>
+        {% endif %}
+    </div>
+</div>
+<div style="margin-top: 1rem;">
+    <a href="{{ url_for('admin.editar_medicamento', id=medicamento.id) }}" class="btn btn-primary">Editar</a>
+    <a href="{{ url_for('admin.inventario') }}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}

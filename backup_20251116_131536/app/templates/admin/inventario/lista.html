@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Inventario{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">💊 Gestión de Inventario</h1>
+<div style="margin-bottom: 1rem;">
+    <a href="{{ url_for('admin.nuevo_medicamento') }}" class="btn btn-success">+ Nuevo Medicamento</a>
+</div>
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Presentación</th>
+                    <th>Stock Actual</th>
+                    <th>Stock Mínimo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for med in medicamentos %}
+                <tr {% if med.necesita_reposicion %}style="background-color: #fee2e2;"{% endif %}>
+                    <td>{{ med.id }}</td>
+                    <td>{{ med.nombre }}</td>
+                    <td>{{ med.presentacion or 'N/A' }}</td>
+                    <td><strong>{{ med.stock }}</strong> {{ med.unidad_medida }}</td>
+                    <td>{{ med.stock_minimo }}</td>
+                    <td>
+                        {% if med.necesita_reposicion %}
+                        <span class="badge badge-danger">⚠️ Stock Bajo</span>
+                        {% else %}
+                        <span class="badge badge-success">✓ OK</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin.ver_medicamento', id=med.id) }}" class="btn btn-sm btn-primary">Ver</a>
+                        <a href="{{ url_for('admin.editar_medicamento', id=med.id) }}" class="btn btn-sm btn-secondary">Editar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

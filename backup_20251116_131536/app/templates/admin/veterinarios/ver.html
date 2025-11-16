@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Ver Veterinario{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">👨‍⚕️ Detalles del Veterinario</h1>
+<div class="card">
+    <div class="card-header">Información Personal</div>
+    <div class="card-body">
+        <p><strong>Nombre:</strong> {{ veterinario.nombre_completo }}</p>
+        <p><strong>Usuario:</strong> {{ veterinario.username }}</p>
+        <p><strong>Email:</strong> {{ veterinario.email }}</p>
+        <p><strong>Teléfono:</strong> {{ veterinario.telefono or 'N/A' }}</p>
+        <p><strong>Especialidad:</strong> {{ veterinario.especialidad or 'N/A' }}</p>
+        <p><strong>Licencia:</strong> {{ veterinario.licencia_profesional or 'N/A' }}</p>
+        <p><strong>Estado:</strong> 
+            {% if veterinario.activo %}
+            <span class="badge badge-success">Activo</span>
+            {% else %}
+            <span class="badge badge-danger">Inactivo</span>
+            {% endif %}
+        </p>
+    </div>
+</div>
+<div style="margin-top: 1rem;">
+    <a href="{{ url_for('admin.editar_veterinario', id=veterinario.id) }}" class="btn btn-primary">Editar</a>
+    <a href="{{ url_for('admin.veterinarios') }}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}

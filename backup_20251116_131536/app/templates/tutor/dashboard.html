@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Tutor{% endblock %}
+{% block content %}
+<div class="mb-4">
+    <h1>🏠 Dashboard del Tutor</h1>
+    <p class="text-muted">Bienvenido, {{ current_user.nombre_completo }}</p>
+</div>
+
+<!-- Estadísticas -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2">Mis Mascotas</h6>
+                        <h2 class="mb-0">{{ total_mascotas }}</h2>
+                    </div>
+                    <i class="bi bi-heart fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2">Total Citas</h6>
+                        <h2 class="mb-0">{{ total_citas }}</h2>
+                    </div>
+                    <i class="bi bi-calendar-check fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2">Citas Pendientes</h6>
+                        <h2 class="mb-0">{{ citas_pendientes }}</h2>
+                    </div>
+                    <i class="bi bi-clock-history fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2">Próximas Citas</h6>
+                        <h2 class="mb-0">{{ citas_proximas|length }}</h2>
+                    </div>
+                    <i class="bi bi-calendar-event fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones Rápidas -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightning-charge"></i> Acciones Rápidas</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('tutor.nueva_mascota') }}" class="btn btn-success">
+                        <i class="bi bi-plus-circle"></i> Registrar Mascota
+                    </a>
+                    <a href="{{ url_for('tutor.nueva_cita') }}" class="btn btn-primary">
+                        <i class="bi bi-calendar-plus"></i> Solicitar Cita
+                    </a>
+                    <a href="{{ url_for('tutor.mascotas') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-list"></i> Ver Mis Mascotas
+                    </a>
+                    <a href="{{ url_for('tutor.citas') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-calendar3"></i> Ver Mis Citas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Próximas Citas -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-calendar-check"></i> Próximas Citas</h5>
+            </div>
+            <div class="card-body">
+                {% if citas_proximas %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Mascota</th>
+                                <th>Motivo</th>
+                                <th>Veterinario</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in citas_proximas %}
+                            <tr>
+                                <td>{{ cita.fecha_hora.strftime('%d/%m/%Y') }}</td>
+                                <td>{{ cita.fecha_hora.strftime('%H:%M') }}</td>
+                                <td>{{ cita.mascota.nombre }}</td>
+                                <td>{{ cita.motivo|truncate(50) }}</td>
+                                <td>
+                                    {% if cita.veterinario %}
+                                    {{ cita.veterinario.nombre_completo }}
+                                    {% else %}
+                                    <span class="text-muted">Sin asignar</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if cita.estado == 'pendiente' %}
+                                    <span class="badge bg-warning">Pendiente</span>
+                                    {% elif cita.estado == 'aceptada' %}
+                                    <span class="badge bg-success">Aceptada</span>
+                                    {% elif cita.estado == 'rechazada' %}
+                                    <span class="badge bg-danger">Rechazada</span>
+                                    {% else %}
+                                    <span class="badge bg-info">{{ cita.estado }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('tutor.ver_cita', id=cita.id) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i> Ver
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> No tienes citas próximas programadas.
+                    <a href="{{ url_for('tutor.nueva_cita') }}">Solicitar una cita</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

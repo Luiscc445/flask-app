@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Atender Cita</h1>
+<div class="card"><div class="card-body"><form method="POST">
+<div class="form-group"><label>Diagnóstico *</label><textarea class="form-control" name="diagnostico" required></textarea></div>
+<div class="form-group"><label>Tratamiento *</label><textarea class="form-control" name="tratamiento" required></textarea></div>
+<h4>Medicamentos</h4>
+<div class="form-group"><label>Medicamento</label><select class="form-control" name="medicamento_id[]">
+<option value="">-</option>
+{% for m in medicamentos %}<option value="{{ m.id }}">{{ m.nombre }} (Stock: {{ m.stock }})</option>{% endfor %}
+</select></div>
+<div class="form-group"><label>Cantidad</label><input type="number" class="form-control" name="cantidad[]" min="0"></div>
+<button type="submit" class="btn btn-success">Completar</button>
+</form></div></div>
+{% endblock %}

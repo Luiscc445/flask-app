@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Reportes{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">📊 Reportes y Estadísticas</h1>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">📅 Citas por Estado</div>
+            <div class="card-body">
+                {% for estado, total in citas_por_estado %}
+                <p><strong>{{ estado.title() }}:</strong> {{ total }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">⚠️ Medicamentos con Stock Bajo</div>
+            <div class="card-body">
+                {% for med in medicamentos_bajo_stock %}
+                <p>• {{ med.nombre }} - Stock: {{ med.stock }}/{{ med.stock_minimo }}</p>
+                {% else %}
+                <p>No hay medicamentos con stock bajo</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

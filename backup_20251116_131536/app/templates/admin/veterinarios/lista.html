@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Veterinarios{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">👨‍⚕️ Gestión de Veterinarios</h1>
+<div style="margin-bottom: 1rem;">
+    <a href="{{ url_for('admin.nuevo_veterinario') }}" class="btn btn-success">+ Nuevo Veterinario</a>
+</div>
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Especialidad</th>
+                    <th>Licencia</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vet in veterinarios %}
+                <tr>
+                    <td>{{ vet.id }}</td>
+                    <td>{{ vet.nombre_completo }}</td>
+                    <td>{{ vet.username }}</td>
+                    <td>{{ vet.email }}</td>
+                    <td>{{ vet.especialidad or 'N/A' }}</td>
+                    <td>{{ vet.licencia_profesional or 'N/A' }}</td>
+                    <td>
+                        {% if vet.activo %}
+                        <span class="badge badge-success">Activo</span>
+                        {% else %}
+                        <span class="badge badge-danger">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin.ver_veterinario', id=vet.id) }}" class="btn btn-sm btn-primary">Ver</a>
+                        <a href="{{ url_for('admin.editar_veterinario', id=vet.id) }}" class="btn btn-sm btn-secondary">Editar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

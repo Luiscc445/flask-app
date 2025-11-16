@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Medicamento{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">➕ Nuevo Medicamento</h1>
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-group">
+                <label class="form-label">Nombre del Medicamento *</label>
+                <input type="text" class="form-control" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control" name="descripcion" rows="3"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Principio Activo</label>
+                        <input type="text" class="form-control" name="principio_activo">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Presentación</label>
+                        <input type="text" class="form-control" name="presentacion" placeholder="Ej: Tabletas, Jarabe">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Stock Inicial</label>
+                        <input type="number" class="form-control" name="stock" value="0" min="0">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Stock Mínimo</label>
+                        <input type="number" class="form-control" name="stock_minimo" value="10" min="0">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">Unidad</label>
+                        <input type="text" class="form-control" name="unidad_medida" value="unidades">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Lote</label>
+                        <input type="text" class="form-control" name="lote">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Fecha de Vencimiento</label>
+                        <input type="date" class="form-control" name="fecha_vencimiento">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Proveedor</label>
+                        <input type="text" class="form-control" name="proveedor">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Precio Unitario</label>
+                        <input type="number" class="form-control" name="precio" step="0.01" min="0">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Crear Medicamento</button>
+            <a href="{{ url_for('admin.inventario') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

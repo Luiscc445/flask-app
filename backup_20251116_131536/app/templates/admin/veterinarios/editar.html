@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Editar Veterinario{% endblock %}
+{% block content %}
+<h1 style="margin-bottom: 2rem;">✏️ Editar Veterinario</h1>
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" value="{{ veterinario.nombre }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" class="form-control" name="apellido" value="{{ veterinario.apellido }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" value="{{ veterinario.email }}" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Teléfono</label>
+                <input type="text" class="form-control" name="telefono" value="{{ veterinario.telefono or '' }}">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Especialidad</label>
+                        <input type="text" class="form-control" name="especialidad" value="{{ veterinario.especialidad or '' }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Licencia</label>
+                        <input type="text" class="form-control" name="licencia" value="{{ veterinario.licencia_profesional or '' }}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nueva Contraseña</label>
+                <input type="password" class="form-control" name="nueva_password">
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="activo" name="activo" {% if veterinario.activo %}checked{% endif %}>
+                    <label for="activo">Cuenta Activa</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            <a href="{{ url_for('admin.ver_veterinario', id=veterinario.id) }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

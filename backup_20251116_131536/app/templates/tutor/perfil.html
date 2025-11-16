@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Mi Perfil</h1>
+<div class="card"><div class="card-body"><form method="POST">
+<div class="form-group"><label>Nombre</label><input type="text" class="form-control" name="nombre" value="{{ current_user.nombre }}" required></div>
+<div class="form-group"><label>Email</label><input type="email" class="form-control" name="email" value="{{ current_user.email }}" required></div>
+<button type="submit" class="btn btn-success">Actualizar</button>
+</form></div></div>
+{% endblock %}
