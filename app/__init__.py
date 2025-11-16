@@ -46,15 +46,11 @@ def create_app(config_name='default'):
     from app.controllers.admin_controller import admin_bp
     from app.controllers.veterinario_controller import veterinario_bp
     from app.controllers.tutor_controller import tutor_bp
-    from app.controllers.recepcionista_controller import recepcionista_bp
-    from app.controllers.api_controller import api_bp
-    
+
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(veterinario_bp, url_prefix='/veterinario')
     app.register_blueprint(tutor_bp, url_prefix='/tutor')
-    app.register_blueprint(recepcionista_bp, url_prefix='/recepcion')
-    app.register_blueprint(api_bp, url_prefix='/api')
     
     # Ruta principal
     @app.route('/')

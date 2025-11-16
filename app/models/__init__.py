@@ -5,6 +5,7 @@ Modelos de la aplicación veterinaria
 from .user import Usuario
 from .mascota import Mascota, Vacuna, DocumentoMascota
 from .cita import Cita, ArchivoCita, ServicioCita
+from .medicamento import Medicamento as MedicamentoBackup, Receta
 from .otros import (
     HistorialClinico,
     Servicio,
@@ -25,6 +26,7 @@ __all__ = [
     'HistorialClinico',
     'Servicio',
     'Medicamento',
+    'Receta',
     'Notificacion',
     'ConfiguracionSistema',
     'AuditoriaAccion'

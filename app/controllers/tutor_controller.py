@@ -43,7 +43,7 @@ def dashboard():
     ).filter(
         Cita.fecha_hora >= datetime.now()
     ).order_by(Cita.fecha_hora.asc()).limit(5).all()
-    
+
     return render_template('tutor/dashboard.html',
                          total_mascotas=total_mascotas,
                          total_citas=total_citas,
@@ -59,7 +59,7 @@ def mascotas():
         tutor_id=current_user.id,
         activo=True
     ).order_by(Mascota.nombre.asc()).all()
-    
+
     return render_template('tutor/mascotas.html', mascotas=mis_mascotas)
 
 
@@ -79,12 +79,12 @@ def nueva_mascota():
         esterilizado = request.form.get('esterilizado') == 'on'
         chip = request.form.get('chip')
         observaciones = request.form.get('observaciones')
-        
+
         # Validaciones
         if not nombre or not especie:
             flash('Nombre y especie son obligatorios.', 'danger')
             return render_template('tutor/nueva_mascota.html')
-        
+
         # Convertir fecha
         fecha_nac = None
         if fecha_nacimiento:
@@ -93,7 +93,7 @@ def nueva_mascota():
             except ValueError:
                 flash('Formato de fecha inválido.', 'danger')
                 return render_template('tutor/nueva_mascota.html')
-        
+
         # Convertir peso
         peso_float = None
         if peso:
@@ -102,7 +102,7 @@ def nueva_mascota():
             except ValueError:
                 flash('El peso debe ser un número válido.', 'danger')
                 return render_template('tutor/nueva_mascota.html')
-        
+
         # Crear mascota
         nueva_mascota = Mascota(
             nombre=nombre,
@@ -117,7 +117,7 @@ def nueva_mascota():
             chip_identificacion=chip,
             observaciones=observaciones
         )
-        
+
         try:
             db.session.add(nueva_mascota)
             db.session.commit()
@@ -126,7 +126,7 @@ def nueva_mascota():
         except Exception as e:
             db.session.rollback()
             flash(f'Error al registrar mascota: {str(e)}', 'danger')
-    
+
     return render_template('tutor/nueva_mascota.html')
 
 
@@ -135,15 +135,15 @@ def nueva_mascota():
 def ver_mascota(id):
     """Ver detalles de una mascota"""
     mascota = Mascota.query.get_or_404(id)
-    
+
     # Verificar que la mascota pertenece al tutor
     if mascota.tutor_id != current_user.id:
         flash('No tienes permiso para ver esta mascota.', 'danger')
         return redirect(url_for('tutor.mascotas'))
-    
+
     # Obtener historial de citas
     citas = Cita.query.filter_by(mascota_id=id).order_by(Cita.fecha_hora.desc()).all()
-    
+
     return render_template('tutor/ver_mascota.html', mascota=mascota, citas=citas)
 
 
@@ -152,12 +152,12 @@ def ver_mascota(id):
 def editar_mascota(id):
     """Editar información de mascota"""
     mascota = Mascota.query.get_or_404(id)
-    
+
     # Verificar que la mascota pertenece al tutor
     if mascota.tutor_id != current_user.id:
         flash('No tienes permiso para editar esta mascota.', 'danger')
         return redirect(url_for('tutor.mascotas'))
-    
+
     if request.method == 'POST':
         # Actualizar datos
         mascota.nombre = request.form.get('nombre')
@@ -168,7 +168,7 @@ def editar_mascota(id):
         mascota.esterilizado = request.form.get('esterilizado') == 'on'
         mascota.chip_identificacion = request.form.get('chip')
         mascota.observaciones = request.form.get('observaciones')
-        
+
         # Fecha de nacimiento
         fecha_nacimiento = request.form.get('fecha_nacimiento')
         if fecha_nacimiento:
@@ -176,7 +176,7 @@ def editar_mascota(id):
                 mascota.fecha_nacimiento = datetime.strptime(fecha_nacimiento, '%Y-%m-%d').date()
             except ValueError:
                 pass
-        
+
         # Peso
         peso = request.form.get('peso')
         if peso:
@@ -184,7 +184,7 @@ def editar_mascota(id):
                 mascota.peso = float(peso)
             except ValueError:
                 pass
-        
+
         try:
             db.session.commit()
             flash('Información de mascota actualizada exitosamente.', 'success')
@@ -192,7 +192,7 @@ def editar_mascota(id):
         except Exception as e:
             db.session.rollback()
             flash(f'Error al actualizar mascota: {str(e)}', 'danger')
-    
+
     return render_template('tutor/editar_mascota.html', mascota=mascota)
 
 
@@ -210,50 +210,50 @@ def nueva_cita():
     """Solicitar nueva cita médica"""
     # Obtener mascotas del tutor
     mascotas = Mascota.query.filter_by(tutor_id=current_user.id, activo=True).all()
-    
+
     if not mascotas:
         flash('Debes registrar al menos una mascota antes de solicitar una cita.', 'warning')
         return redirect(url_for('tutor.nueva_mascota'))
-    
+
     # Obtener veterinarios activos
     veterinarios = Usuario.query.filter_by(rol='veterinario', activo=True).all()
-    
+
     if request.method == 'POST':
         mascota_id = request.form.get('mascota_id')
         veterinario_id = request.form.get('veterinario_id')
         fecha = request.form.get('fecha')
         hora = request.form.get('hora')
         motivo = request.form.get('motivo')
-        
+
         # Validaciones
         if not all([mascota_id, veterinario_id, fecha, hora, motivo]):
             flash('Por favor complete todos los campos.', 'danger')
             return render_template('tutor/nueva_cita.html', mascotas=mascotas, veterinarios=veterinarios)
-        
+
         # Verificar que la mascota pertenece al tutor
         mascota = Mascota.query.get(mascota_id)
         if not mascota or mascota.tutor_id != current_user.id:
             flash('Mascota no válida.', 'danger')
             return render_template('tutor/nueva_cita.html', mascotas=mascotas, veterinarios=veterinarios)
-        
+
         # Verificar que el veterinario existe
         veterinario = Usuario.query.get(veterinario_id)
         if not veterinario or veterinario.rol != 'veterinario':
             flash('Veterinario no válido.', 'danger')
             return render_template('tutor/nueva_cita.html', mascotas=mascotas, veterinarios=veterinarios)
-        
+
         # Combinar fecha y hora
         try:
             fecha_hora = datetime.strptime(f"{fecha} {hora}", '%Y-%m-%d %H:%M')
         except ValueError:
             flash('Formato de fecha u hora inválido.', 'danger')
             return render_template('tutor/nueva_cita.html', mascotas=mascotas, veterinarios=veterinarios)
-        
+
         # Verificar que la fecha sea futura
         if fecha_hora < datetime.now():
             flash('La fecha de la cita debe ser futura.', 'danger')
             return render_template('tutor/nueva_cita.html', mascotas=mascotas, veterinarios=veterinarios)
-        
+
         # Crear cita con veterinario asignado
         nueva_cita = Cita(
             mascota_id=mascota_id,
@@ -263,7 +263,7 @@ def nueva_cita():
             motivo=motivo,
             estado='pendiente'
         )
-        
+
         try:
             db.session.add(nueva_cita)
             db.session.commit()
@@ -272,7 +272,7 @@ def nueva_cita():
         except Exception as e:
             db.session.rollback()
             flash(f'Error al solicitar cita: {str(e)}', 'danger')
-    
+
     return render_template('tutor/nueva_cita.html', mascotas=mascotas, veterinarios=veterinarios)
 
 
@@ -281,12 +281,12 @@ def nueva_cita():
 def ver_cita(id):
     """Ver detalles de una cita"""
     cita = Cita.query.get_or_404(id)
-    
+
     # Verificar que la cita pertenece al tutor
     if cita.tutor_id != current_user.id:
         flash('No tienes permiso para ver esta cita.', 'danger')
         return redirect(url_for('tutor.citas'))
-    
+
     return render_template('tutor/ver_cita.html', cita=cita)
 
 
@@ -301,27 +301,27 @@ def perfil():
         current_user.email = request.form.get('email')
         current_user.telefono = request.form.get('telefono')
         current_user.direccion = request.form.get('direccion')
-        
+
         # Cambiar contraseña si se proporciona
         password_actual = request.form.get('password_actual')
         password_nueva = request.form.get('password_nueva')
         password_confirmar = request.form.get('password_confirmar')
-        
+
         if password_actual and password_nueva:
             if not current_user.check_password(password_actual):
                 flash('La contraseña actual es incorrecta.', 'danger')
                 return render_template('tutor/perfil.html')
-            
+
             if password_nueva != password_confirmar:
                 flash('Las contraseñas nuevas no coinciden.', 'danger')
                 return render_template('tutor/perfil.html')
-            
+
             if len(password_nueva) < 6:
                 flash('La contraseña debe tener al menos 6 caracteres.', 'danger')
                 return render_template('tutor/perfil.html')
-            
+
             current_user.set_password(password_nueva)
-        
+
         try:
             db.session.commit()
             flash('Perfil actualizado exitosamente.', 'success')
@@ -329,5 +329,5 @@ def perfil():
         except Exception as e:
             db.session.rollback()
             flash(f'Error al actualizar perfil: {str(e)}', 'danger')
-    
+
     return render_template('tutor/perfil.html')
